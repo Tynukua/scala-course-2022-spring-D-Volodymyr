@@ -48,7 +48,7 @@ object adt:
       this match
         case ErrorOr.Error(v) ⇒ ErrorOr.Error(v)
         case ErrorOr.Value(v)  ⇒ try ErrorOr.Value(f(v)) catch{
-          case ex: Throwable => ErrorOr.Error(e)
+          case ex: Throwable => ErrorOr.Error(ex)
         }
       
   // Companion object to define constructor
