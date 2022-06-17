@@ -12,7 +12,6 @@ package karazin.scala.users.group.week2.homework
 object adt:
   
   enum ErrorOr[+V]:
-      enum ErrorOr[+V]:
     
     // Added to make it compilable. Remove it.
     case Value(x: V) extends ErrorOr[V]
@@ -60,9 +59,9 @@ object adt:
       no exception is thrown but the case for an error is returned
      */
     def withFilter(f: V => Boolean) = ErrorOr[V]
-        this match:
-          case ErrorOr.Error(e)     => ErrorOr.Error(e)
-          case ErrorOr.Value(v) if  => ErrorOr.Value(v)
+      this match
+        case ErrorOr.Error(e)     => ErrorOr.Error(e)
+        case ErrorOr.Value(v) if f(v) => ErrorOr.Value(v)
   
     /* 
       The method is used for getting rid of internal box
@@ -80,8 +79,11 @@ object adt:
       The method is used for applying side effects without returning any result
       Provide a type parameter, an argument and a result type
     */
-    def foreach = ???
-      
+    def foreach[U](f: V => U): Unit =
+      this match
+        case ErrorOr.Error(e) => ()
+        case ErrorOr.Value(v) => f(v)
+
   // Companion object to define constructor
   object ErrorOr:
     /* 
