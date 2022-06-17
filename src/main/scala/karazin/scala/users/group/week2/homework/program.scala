@@ -6,11 +6,16 @@ import model._
 import services._
 
 object program:
-  
   /*
    Print all view for all user's posts if they exists
   */
-  def printPostsViews(): ErrorOr[List[PostView]] = ???
+  def printPostsViews(): ErrorOr[List[PostView]] = 
+    for 
+      postviews   <- getPostsViews()
+    yield {
+      println(postviews) 
+      postviews
+    }
 
   /*
    Getting view for all user's posts if they exists
@@ -20,10 +25,10 @@ object program:
       profile   <- getUserProfile()
       posts     <- getPosts(profile.userId)
       postsView <- ErrorOr(posts map { post => getPostView(post) })
-    yield postsView.foldLeft(List[PostView]()) { (t, e) =>
-      e match
-        case ErrorOr.Value(v) => v :: t
-        case ErrorOr.Error(e) => t
+    yield postsView.foldLeft(List[PostView]()) { (tail, head) =>
+      head match
+        case ErrorOr.Value(v) => v :: tail
+        case ErrorOr.Error(e) => tail 
     }
   
 
@@ -41,7 +46,19 @@ object program:
   /*
    Provide desugared version of the previous two methods
   */
-  def getPostsViewDesugared() = ???
-
-
-  
+  def getPostsViewDesugared(): ErrorOr[List[ErrorOr[PostView]]]= 
+    getUserProfile() flatMap { profile =>
+      getPosts(profile.userId)
+      } map { posts =>
+        posts map { post => 
+          getComments(post.postId) flatMap { comments =>
+          getLikes(post.postId) flatMap { likes =>
+            getShares(post.postId) map { shares =>
+              PostView(post, comments, likes, shares)
+            } 
+             
+            
+      }
+    } 
+  }
+}  
