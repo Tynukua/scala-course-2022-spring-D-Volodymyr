@@ -46,8 +46,10 @@ object adt:
      */
     def map[Q](f: V ⇒ Q): ErrorOr[Q] =
       this match
-        case ErrorOr.Error ⇒ ErrorOr.Error
-        case ErrorOr.Value(v)  ⇒ ErrorOr.Value(f(v))
+        case ErrorOr.Error(v) ⇒ ErrorOr.Error(v)
+        case ErrorOr.Value(v)  ⇒ try ErrorOr.Value(f(v)) catch{
+          case ex: Throwable => ErrorOr.Error(e)
+        }
       
   // Companion object to define constructor
   object ErrorOr:
@@ -59,6 +61,6 @@ object adt:
     */
     def apply[V](v: V): ErrorOr[V] =
       println(v)
-      if v == null then ErrorOr.Error else ErrorOr.Value(v)
+      if v == null then ErrorOr.Error(Exception("Null ptr")) else ErrorOr.Value(v)
       
   
