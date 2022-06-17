@@ -68,7 +68,13 @@ object adt:
       The method is used for getting rid of internal box
       Provide a type parameter, an argument and a result type
     */
-    def flatten = ???
+    def flatten[U](implicit ev: V <:< ErrorOr[U]): ErrorOr[U] =
+      this match
+        case ErrorOr.Value(v) => try ev(v) catch{
+          case e: Throwable     => ErrorOr.Error(e)
+        }
+        case ErrorOr.Error(e)    => ErrorOr.Error(e)
+
     
     /* 
       The method is used for applying side effects without returning any result
