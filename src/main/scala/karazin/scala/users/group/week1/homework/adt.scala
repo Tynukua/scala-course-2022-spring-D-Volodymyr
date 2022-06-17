@@ -48,5 +48,3 @@ object adt:
       Make sure that in case of failing the method with exception
       no exception is thrown but the case for an error is returned
     */
-    def apply[V](v: V): ErrorOr[V] =
-      if v == null then ErrorOr.Fail(Exception("Null ptr")) else ErrorOr.Value(v)

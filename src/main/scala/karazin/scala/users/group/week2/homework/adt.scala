@@ -10,7 +10,6 @@ package karazin.scala.users.group.week2.homework
 */
 
 object adt:
-  
   enum ErrorOr[+V]:
     
     // Added to make it compilable. Remove it.
@@ -58,11 +57,11 @@ object adt:
       Make sure that in case of failing the method with exception
       no exception is thrown but the case for an error is returned
      */
-    def withFilter(f: V => Boolean) = ErrorOr[V]
+    def withFilter(p: V => Boolean): ErrorOr[V] =
       this match
-        case ErrorOr.Error(e)     => ErrorOr.Error(e)
-        case ErrorOr.Value(v) if f(v) => ErrorOr.Value(v)
-  
+        case ErrorOr.Error(e)         => ErrorOr.Error(e)
+        case ErrorOr.Value(v) if p(v) => ErrorOr.Value(v)
+        case _                        => ErrorOr.Error(Exception("Filtered"))
     /* 
       The method is used for getting rid of internal box
       Provide a type parameter, an argument and a result type
@@ -92,6 +91,5 @@ object adt:
       Make sure that in case of failing the method with exception
       no exception is thrown but the case for an error is returned
     */
-    def apply = ???
-      
-  
+    def apply[V](v: V): ErrorOr[V] =
+      if v == null then ErrorOr.Error(Exception("Null ptr")) else ErrorOr.Value(v)
