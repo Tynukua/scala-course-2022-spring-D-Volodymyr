@@ -15,12 +15,16 @@ object program:
   /*
    Getting view for all user's posts if they exists
   */
-  def getPostsViews(): ErrorOr[List[ErrorOr[PostView]]]= 
+  def getPostsViews(): ErrorOr[List[PostView]]= 
     for
       profile   <- getUserProfile()
       posts     <- getPosts(profile.userId)
       postsView <- ErrorOr(posts map { post => getPostView(post) })
-    yield postsView
+    yield postsView.foldLeft(List[PostView]()) { (t, e) =>
+      e match
+        case ErrorOr.Value(v) => v :: t
+        case ErrorOr.Error(e) => t
+    }
   
 
   /* 
