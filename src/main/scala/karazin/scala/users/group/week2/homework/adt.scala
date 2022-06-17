@@ -59,7 +59,7 @@ object adt:
       Make sure that in case of failing the method with exception
       no exception is thrown but the case for an error is returned
      */
-    def withFilter = ???
+        this match:
   
     /* 
       The method is used for getting rid of internal box
