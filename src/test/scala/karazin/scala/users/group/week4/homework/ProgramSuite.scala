@@ -22,19 +22,20 @@ import scala.concurrent.ExecutionContextExecutorService
  
 
 class ProgramSuite extends munit.FunSuite:
-  val contex = new Fixture[ExecutionContext]("context") {
-    var ctx: ExecutionContextExecutorService = 
-        ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor)
+  val context = new Fixture[ExecutionContext]("context") {
+    var ctx: ExecutionContextExecutorService = null
+        
     def apply() =  ctx
-    override def beforeEach(context: BeforeEach): Unit = {
+    override def beforeAll(): Unit = {
       ctx = 
         ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor)
     }
-    override def afterEach(context: AfterEach): Unit = {
+    override def afterAll(): Unit = {
       ctx.shutdown()
     }
   }
+  override def munitFixtures = List(context)
   test("successful async test example") {
-      val views = getPostsViews()(using contex())
-      views.map(v => print(v))(using executor = contex())
+      val views = getPostsViews()(using context())
+      views.map(v => print(v))(using executor = context())
   }
