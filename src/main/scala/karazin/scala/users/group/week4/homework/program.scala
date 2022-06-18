@@ -7,6 +7,7 @@ Task:
     • at least one for `getComments`, `getLikes`, `getShares`
   • write tests
 
+ */
 package karazin.scala.users.group.week4.homework
 
 import java.util.UUID
@@ -34,4 +35,3 @@ object program:
       shares    ← getSharesService
     yield PostView(post, comments, likes, shares)
     
- */
