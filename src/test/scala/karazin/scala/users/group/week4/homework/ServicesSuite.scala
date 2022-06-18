@@ -12,7 +12,6 @@ import scala.concurrent.Future
     • https://scalameta.org/munit/docs/assertions.html
     • https://scalameta.org/munit/docs/fixtures.html#ad-hoc-test-local-fixtures
  */
-
 class ServicesSuite extends munit.FunSuite:
   
   test("failed async test example") {
