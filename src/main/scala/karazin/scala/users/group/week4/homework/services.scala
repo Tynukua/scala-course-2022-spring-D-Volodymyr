@@ -9,6 +9,7 @@ Task:
       • `def myMethod(...): Future[...] = Future { }` is ok
       • `def myMethod(...): Future[...] = Future { }(executionContext)` is not ok 
   • write tests
+ */
 
 package karazin.scala.users.group.week4.homework
 
@@ -18,39 +19,40 @@ import scala.util.Success
 import scala.util.Failure
 
 import karazin.scala.users.group.week4.homework.model._
+import scala.concurrent.ExecutionContext
+// import concurrent.ExecutionContext.Implicits.global
 
 
 object services:
   
-  def getUserProfile(): Future[UserProfile] =
+  def getUserProfile(using ctx: ExecutionContext): Future[UserProfile] =
     Future {
       UserProfile(UUID.randomUUID())
     }
   
-  def getPosts(userId: UUID): Future[List[Post]] =
+  def getPosts(userId: UUID)(using ctx: ExecutionContext): Future[List[Post]] =
     Future {
       Post(userId = UUID.randomUUID(), postId = UUID.randomUUID()) :: Nil
     }
   
-  def getComments(postId: UUID): Future[List[Comment]] = 
+  def getComments(postId: UUID)(using ctx: ExecutionContext): Future[List[Comment]] = 
     Future {
       // Emulating time consumed operation
       Thread.sleep(5000)
       Comment(userId = UUID.randomUUID(), postId = UUID.randomUUID()) :: Nil
     }
   
-  def getLikes(postId: UUID): Future[List[Like]] = 
+  def getLikes(postId: UUID)(using ctx: ExecutionContext): Future[List[Like]] = 
     Future {
       // Emulating time consumed operation
       Thread.sleep(2000)
       Like(userId = UUID.randomUUID(), postId = UUID.randomUUID()) :: Nil
     }
   
-  def getShares(postId: UUID): Future[List[Share]] = 
+  def getShares(postId: UUID)(using ctx: ExecutionContext): Future[List[Share]] = 
     Future {
       // Emulating time consumed operation
       Thread.sleep(500)
       Share(userId = UUID.randomUUID(), postId = UUID.randomUUID()) :: Nil
     }
     
- */
