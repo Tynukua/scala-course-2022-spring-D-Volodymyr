@@ -16,7 +16,7 @@ import scala.util.Success
 import scala.util.Failure
 
 import karazin.scala.users.group.week4.homework.model._
-
+import  services._
 
 object program:
   // Make sure that the result type is exactly `Future[List[PostView]]`
