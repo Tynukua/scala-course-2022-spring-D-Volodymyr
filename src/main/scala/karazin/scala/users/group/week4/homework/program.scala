@@ -17,13 +17,14 @@ import scala.util.Failure
 
 import karazin.scala.users.group.week4.homework.model._
 import  services._
+import scala.concurrent.ExecutionContext
 
 object program:
   // Make sure that the result type is exactly `Future[List[PostView]]`
   // not `Future[List[Future[PostView]]]`
-  def getPostsViews(): Future[List[PostView]] = ???
+  def getPostsViews()(using ctx: ExecutionContext): Future[List[PostView]] = ???
 
-  def getPostView(post: Post): Future[PostView] = 
+  def getPostView(post: Post)(using ctx: ExecutionContext): Future[PostView] = 
     
     val getCommentsService  = getComments(post.postId)
     val getLikesService     = getLikes(post.postId)
