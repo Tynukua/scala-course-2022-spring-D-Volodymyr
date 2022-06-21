@@ -60,7 +60,6 @@ object adt:
       no exception is thrown but the case for an error is returned
     */
     def apply[V](v: V): ErrorOr[V] =
-      println(v)
-      if v == null then ErrorOr.Error(Exception("Null ptr")) else ErrorOr.Value(v)
+      if v == null then ErrorOr.Error(Exception("Null is goven")) else ErrorOr.Value(v)
       
   
