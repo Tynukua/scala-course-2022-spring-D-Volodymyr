@@ -92,4 +92,4 @@ object adt:
       no exception is thrown but the case for an error is returned
     */
     def apply[V](v: V): ErrorOr[V] =
-      if v == null then ErrorOr.Error(Exception("Null ptr")) else ErrorOr.Value(v)
+      if v == null then ErrorOr.Error(Exception("null is given")) else ErrorOr.Value(v)
