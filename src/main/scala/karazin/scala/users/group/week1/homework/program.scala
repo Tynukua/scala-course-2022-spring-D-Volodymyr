@@ -6,7 +6,7 @@ import adt._
 import model._
 import services._
 
-object program extends App:
+object program:
   
   /*
    Getting view for all user's posts
