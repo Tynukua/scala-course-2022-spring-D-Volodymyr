@@ -25,11 +25,27 @@ class ServicesSuite extends munit.FunSuite:
     }
   }
 
-  test("getposts test") {
+  test("getcomments test") {
     val id = UUID(1,1)
     val comments = getComments(id)
 
     comments map {
       comments => for ( c<- comments) assertEquals(c.postId, id)
+    }
+  }
+  test("getshares test") {
+    val id = UUID(1,1)
+    val items= getShares(id)
+
+    items map {
+       items => for ( i<- items) assertEquals(i.postId, id)
+    }
+  }
+  test("getlikes test") {
+    val id = UUID(1,1)
+    val items= getLikes(id)
+
+    items map {
+       items => for ( i<- items) assertEquals(i.postId, id)
     }
   }
