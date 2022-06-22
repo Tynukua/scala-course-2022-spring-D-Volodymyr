@@ -31,8 +31,8 @@ class ServicesSuite extends munit.FunSuite:
     }
   }
   override def munitFixtures = List(context)
-  test("async test example") {
-      getUserProfile(using context()).map(print(_))(using executor = context())
+  test("should get profile using ctx from hooks") {
+      val profile = getUserProfile(using context())
   }
 
   

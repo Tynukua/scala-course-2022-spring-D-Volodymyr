@@ -20,7 +20,6 @@ import scala.util.Failure
 
 import karazin.scala.users.group.week4.homework.model._
 import scala.concurrent.ExecutionContext
-// import concurrent.ExecutionContext.Implicits.global
 
 
 object services:

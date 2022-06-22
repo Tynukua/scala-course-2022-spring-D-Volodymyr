@@ -35,7 +35,6 @@ class ProgramSuite extends munit.FunSuite:
     }
   }
   override def munitFixtures = List(context)
-  test("successful async test example") {
+  test("should get ") {
       val views = getPostsViews()(using context())
-      views.map(v => print(v))(using executor = context())
   }
