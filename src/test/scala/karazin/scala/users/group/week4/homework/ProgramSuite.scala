@@ -35,6 +35,6 @@ class ProgramSuite extends munit.FunSuite:
     }
   }
   override def munitFixtures = List(context)
-  test("should get ") {
+  test("should get posts using ctx from hooks") {
       val views = getPostsViews()(using context())
   }
