@@ -1,7 +1,12 @@
 package karazin.scala.users.group.week4.homework
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import java.util.concurrent.ExecutorService
+import scala.concurrent.ExecutionContext
+import scala.concurrent.ExecutionContextExecutorService
+import services._
 
 /*
   Write test for all service in karazin.scala.users.group.week4.homework.services
@@ -12,13 +17,22 @@ import scala.concurrent.Future
     • https://scalameta.org/munit/docs/assertions.html
     • https://scalameta.org/munit/docs/fixtures.html#ad-hoc-test-local-fixtures
  */
-
 class ServicesSuite extends munit.FunSuite:
-  
-  test("failed async test example") {
-    Future {
-      assertEquals(42, 43)
+  val context = new Fixture[ExecutionContext]("context") {
+    var ctx: ExecutionContextExecutorService = null
+        
+    def apply() =  ctx
+    override def beforeAll(): Unit = {
+      ctx = 
+        ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor)
     }
+    override def afterAll(): Unit = {
+      ctx.shutdown()
+    }
+  }
+  override def munitFixtures = List(context)
+  test("should get profile using ctx from hooks") {
+      val profile = getUserProfile(using context())
   }
 
   
